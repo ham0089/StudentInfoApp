@@ -16,10 +16,6 @@ namespace StudentInfoApp
             this.studentId = studentId;
         }
 
-        public StudentPage_Individual()
-        {
-        }
-
         private void StudentPage_Individual_Load(object sender, EventArgs e)
         {
             LoadStudentData();
@@ -29,7 +25,28 @@ namespace StudentInfoApp
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string query = "SELECT StudentID, CONCAT(FirstName, ' ', MiddleName, ' ', LastName) AS FullName, Address, Age, Contact, Email FROM StudentRecordTB WHERE StudentID = @StudentID";
+                string query = @"
+                    SELECT 
+                        studentId, 
+                        CONCAT(firstName, ' ', middleName, ' ', lastName) AS FullName, 
+                        houseNo, 
+                        brgyName, 
+                        municipality, 
+                        province, 
+                        region, 
+                        country, 
+                        birthdate, 
+                        age, 
+                        studContactNo, 
+                        emailAddress, 
+                        guardianFirstName, 
+                        guardianLastName, 
+                        hobbies, 
+                        nickname, 
+                        courseId, 
+                        yearId 
+                    FROM StudentRecordTB 
+                    WHERE studentId = @StudentID";
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@StudentID", studentId);
 
@@ -39,15 +56,24 @@ namespace StudentInfoApp
                     MySqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                        txtFirstName.Text = reader["FirstName"].ToString();
-                        txtLastName.Text = reader["LastName"].ToString();
-                        txtMiddleName.Text = reader["MiddleName"].ToString();
-                        txtAge.Text = reader["Age"].ToString();
-                        txtContact.Text = reader["Contact"].ToString();
-                        txtEmail.Text = reader["Email"].ToString();
-                        txtAddress.Text = reader["Address"].ToString();
-                        lblStudentID.Text = reader["StudentID"].ToString();
+                        lblStudentID.Text = reader["studentId"].ToString();
                         lblFullName.Text = reader["FullName"].ToString();
+                        txtHouseNo.Text = reader["houseNo"].ToString();
+                        txtBrgyName.Text = reader["brgyName"].ToString();
+                        txtMunicipality.Text = reader["municipality"].ToString();
+                        txtProvince.Text = reader["province"].ToString();
+                        txtRegion.Text = reader["region"].ToString();
+                        txtCountry.Text = reader["country"].ToString();
+                        txtBirthdate.Text = reader["birthdate"].ToString();
+                        txtAge.Text = reader["age"].ToString();
+                        txtStudContactNo.Text = reader["studContactNo"].ToString();
+                        txtEmailAddress.Text = reader["emailAddress"].ToString();
+                        txtGuardianFirstName.Text = reader["guardianFirstName"].ToString();
+                        txtGuardianLastName.Text = reader["guardianLastName"].ToString();
+                        txtHobbies.Text = reader["hobbies"].ToString();
+                        txtNickname.Text = reader["nickname"].ToString();
+                        txtCourseId.Text = reader["courseId"].ToString();
+                        txtYearId.Text = reader["yearId"].ToString();
                     }
                     reader.Close();
                 }
@@ -56,6 +82,31 @@ namespace StudentInfoApp
                     MessageBox.Show("An error occurred while loading data: " + ex.Message);
                 }
             }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtMunicipality_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtProvince_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtNickname_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
